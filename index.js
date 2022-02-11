@@ -11,12 +11,19 @@ const player = new Player(client);
 // add the trackStart event so when a song will be played this message will be sent
 player.on('trackStart', (queue, track) => queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`));
 
+client.commands = new Collection();
+const commadsFiles = fs.readdirSync('./commands').filter(file => file.endsWith('js'));
+
+for (const f of commadsFiles) {
+	const command = require(`./commands/${f}`);
+	client.commands.set(command.data.name, command);
+}
 
 client.on('interactionCreate', async interaction => {
-	console.log('llego al evento');
 	if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName.toLocaleLowerCase());
+	console.log(interaction.commandName);
+	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
 
@@ -25,7 +32,6 @@ client.on('interactionCreate', async interaction => {
 	}
 	catch (error) {
 		console.error(error);
-		interaction.followUp({ content: 'There was an error trying to execute this command' });
 	}
 });
 
@@ -34,9 +40,7 @@ client.on('messageCreate', async message => {
 	if (!client.application?.owner) await client.application?.fetch();
 
 	if (message.content === '!commands' && message.author.id === client.application?.owner?.id) {
-		client.commands = new Collection();
 		const commands = [];
-		const commadsFiles = fs.readdirSync('./commands').filter(file => file.endsWith('js'));
 
 		for (const f of commadsFiles) {
 			const command = require(`./commands/${f}`);

@@ -1,5 +1,3 @@
-// const { SlashCommandBuilder } = require ('@discordjs/builders');
-
 module.exports = {
 	data: {
 		name: 'play',
@@ -13,11 +11,6 @@ module.exports = {
 			}
 		]
 	},
-	/*
-    data : new SlashCommandBuilder().setName('play')
-		.setDescription('Play a song!')
-		.addStringOption(option => option.setName('input').setDescription('the song to play').setRequired(true)),
-    */
 	async execute(interaction, player) {
 		if (!interaction.member.voice.channelId) {
 			await interaction.reply({ content: 'You are not in a voice channel!', ephemeral: true });
