@@ -22,9 +22,8 @@ for (const f of commadsFiles) {
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-	console.log(interaction.commandName);
 	const command = client.commands.get(interaction.commandName);
-
+	// console.log(interaction.commandName);
 	if (!command) return;
 
 	try {
