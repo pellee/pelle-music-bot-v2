@@ -8,7 +8,7 @@ function createSlashCommands(message, commands) {
 	(async () => {
 		try {
 			await rest.put(
-				Routes.applicationGuildCommands(creds.botId, creds.guildId),
+				Routes.applicationGuildCommands(creds.botId, message.guildId),
 				{ body: commands },
 			);
 			message.reply('Commands added!');

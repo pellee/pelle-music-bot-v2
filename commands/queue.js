@@ -30,15 +30,19 @@ module.exports = {
 	},
 	async execute(interaction, player) {
 		if (!interaction.member.voice.channelId) {
-			await interaction.reply({ content: 'You are not in a voice channel!', ephemeral: true });
+			return await interaction.reply({ content: 'You are not in a voice channel!', ephemeral: true });
 		}
 
 		if (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId) {
-			await interaction.reply({ content: 'You are not in my voice channel!', ephemeral: true });
+			return await interaction.reply({ content: 'You are not in my voice channel!', ephemeral: true });
 		}
 
 		await interaction.deferReply();
 		const queue = player.getQueue(interaction.guild);
+
+		if (!queue?.tracks && !queue?.current) {
+			return await interaction.followUp({ content: 'No songs been played!', ephemeral: true });
+		}
 
 		const embedMessage = buildMessageQueue(queue.tracks, queue.current)
 			.setFooter({ text : `Requested By: ${interaction.user.tag}`, iconURL : `${interaction.user.displayAvatarURL({ format : 'png' })}` });

@@ -6,7 +6,6 @@ const creds = require('./cfg.json');
 const slash = require('./deploy-commands.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
-
 const player = new Player(client);
 // add the trackStart event so when a song will be played this message will be sent
 player.on('trackStart', (queue, track) => queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`));
