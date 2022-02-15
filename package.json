@@ -13,6 +13,7 @@
   "author": "pelle",
   "license": "ISC",
   "dependencies": {
+    "@discord-player/extractor": "^3.0.2",
     "@discordjs/builders": "^0.12.0",
     "@discordjs/opus": "^0.5.3",
     "@discordjs/rest": "^0.3.0",
