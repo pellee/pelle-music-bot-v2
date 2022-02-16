@@ -11,6 +11,20 @@ const player = new Player(client);
 // add the trackStart event so when a song will be played this message will be sent
 player.on('trackStart', (queue, track) => queue.metadata.channel.send(`🎶 | Now playing **${track.title}**!`));
 
+player.on('botDisconnect', (queue) => queue.metadata.channel.send('I been disconect from the channel'));
+
+player.on('channelEmpty', (queue) => queue.metadata.channel.send('The channel voice is empty'));
+
+player.on('connectionCreate', function(queue, connection) {
+	queue.metadata.channel.send('Joining the channel!');
+	connection.connectionTimeout = 60000;
+});
+
+player.on('connectionError', function(queue, error) {
+	queue.metadata.channel.send('There was an error!');
+	console.log(error);
+});
+
 client.commands = new Collection();
 const commadsFiles = fs.readdirSync('./commands').filter(file => file.endsWith('js'));
 
