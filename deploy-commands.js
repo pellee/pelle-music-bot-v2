@@ -1,14 +1,15 @@
+require ('dotenv').config();
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
-const creds = require('./cfg.json');
+// const creds = require('./cfg.json');
 
 function createSlashCommands(message, commands) {
-	const rest = new REST({ version: '9' }).setToken(creds.token);
+	const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 	(async () => {
 		try {
 			await rest.put(
-				Routes.applicationGuildCommands(creds.botId, message.guildId),
+				Routes.applicationGuildCommands(process.env.CLIENT_ID, message.guildId),
 				{ body: commands },
 			);
 			message.reply('Commands added!');

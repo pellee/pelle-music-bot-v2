@@ -1,8 +1,9 @@
+require ('dotenv').config();
 const { Client, Intents, Collection } = require('discord.js');
 const { Player } = require('discord-player');
 const fs = require('fs');
 
-const creds = require('./cfg.json');
+// const creds = require('./cfg.json');
 const slash = require('./deploy-commands.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
@@ -26,7 +27,12 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(interaction, player);
+		if (command == 'lyrics') {
+			await command.execute(interaction);
+		}
+		else {
+			await command.execute(interaction, player);
+		}
 	}
 	catch (error) {
 		console.error(error);
@@ -60,4 +66,4 @@ client.once('ready', () => {
 	console.log('Bot on');
 });
 
-client.login(creds.token);
+client.login(process.env.TOKEN);

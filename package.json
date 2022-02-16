@@ -4,7 +4,7 @@
   "description": "music bot for discord",
   "main": "index.js",
   "scripts": {
-    "test": "no test"
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -20,9 +20,12 @@
     "discord-api-types": "^0.26.1",
     "discord-player": "^5.2.2",
     "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
     "eslint": "^8.8.0",
     "ffmpeg": "^0.0.4",
-    "ffmpeg-static": "^4.4.1",
+    "ffmpeg-static": "^4.4.1"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.15"
   }
 }
