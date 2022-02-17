@@ -1,22 +1,26 @@
 const { MessageEmbed } = require('discord.js');
 
-function buildField(track) {
+function buildFields(track, idx) {
+
+	console.log(track);
 	return [
+		{ name : 'Id', value : `${idx}`, inline : true },
 		{ name : 'Song', value : `${track.title}`, inline : true },
 		{ name : 'Duration', value : `${track.duration}`, inline : true },
-		{ name : 'RequestBy', value : `${track.requestedBy.tag}`, inline : true }
+		{ name : 'User', value : `${track.requestedBy.tag}`, inline : true }
 	];
 }
 
 function buildMessageQueue(tracks, current) {
+	let i = 0;
 	const queueMessageEmbed = new MessageEmbed()
 		.setColor('GREEN')
 		.setTitle('Enqueued Songs!');
-	queueMessageEmbed.addFields(buildField(current));
+	queueMessageEmbed.addFields(buildFields(current, i += 1));
 
 	if (tracks?.length > 0) {
 		tracks.forEach(track => {
-			queueMessageEmbed.addFields(buildField(track));
+			queueMessageEmbed.addFields(buildFields(track, i += 1));
 		});
 	}
 
@@ -45,7 +49,7 @@ module.exports = {
 		}
 
 		const embedMessage = buildMessageQueue(queue.tracks, queue.current)
-			.setFooter({ text : `Requested By: ${interaction.user.tag}`, iconURL : `${interaction.user.displayAvatarURL({ format : 'png' })}` });
+			.setFooter({ text : '.' + '\u3000'.repeat(32) + `Queue length: ${queue.tracks.length + 1}` });
 
 		return await interaction.followUp({ embeds: [embedMessage] });
 	}

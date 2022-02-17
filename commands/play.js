@@ -38,13 +38,21 @@ module.exports = {
 			return await interaction.reply({ content: 'Could not join your voice channel!', ephemeral: true });
 		}
 
-		const track = await player.search(query, {
-			requestedBy: interaction.user
-		}).then(x => x.tracks[0]);
-		if (!track) return await interaction.followUp({ content: `❌ | Track **${query}** not found!` });
+		const tracks = await player.search(query, { requestedBy: interaction.user })
+			.then(x => x.tracks);
 
-		queue.play(track);
+		if (!tracks) {
+			return await interaction.followUp({ content: '❌ | No song was found!' });
+		}
 
-		return await interaction.followUp({ content: `⏱️ | Loading track **${track.title}**!` });
+		if (query.includes('playlist') || query.includes('album') || query.includes('list')) {
+			queue.addTracks(tracks);
+		}
+		else {
+			queue.addTrack(tracks[0]);
+		}
+		queue.play();
+
+		return await interaction.followUp({ content: '⏱️ | Loading track!' });
 	}
 };
