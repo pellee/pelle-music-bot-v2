@@ -2,12 +2,12 @@ const { MessageEmbed } = require('discord.js');
 
 function buildFields(track, idx) {
 
-	console.log(track);
+	// console.log(track);
 	return [
 		{ name : 'Id', value : `${idx}`, inline : true },
 		{ name : 'Song', value : `${track.title}`, inline : true },
 		{ name : 'Duration', value : `${track.duration}`, inline : true },
-		{ name : 'User', value : `${track.requestedBy.tag}`, inline : true }
+		{ name : 'User', value : `${track.requestedBy.username}`, inline : true }
 	];
 }
 
