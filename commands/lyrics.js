@@ -36,9 +36,10 @@ module.exports = {
 					.setDescription(song.lyrics)
 					.setFooter({ text : `Requested By: ${interaction.user.tag}`, iconURL : `${interaction.user.displayAvatarURL({ format : 'png' })}` });
 			})
-			.catch(await interaction.followUp({ content: 'Lyrics not found' }));
+			.catch(error => console.log(error));
 
-		await lyricsClient.search(interaction.options.get('song').value)
+		/*
+			await lyricsClient.search(interaction.options.get('song').value)
 			.then(function(song) {
 				embedMessage = new MessageEmbed()
 					.setColor('GREEN')
@@ -50,6 +51,7 @@ module.exports = {
 				console.log(error);
 				interaction.followUp({ content: 'Lyrics not found' });
 			});
+		*/
 
 		return await interaction.followUp({ embeds: [embedMessage] });
 

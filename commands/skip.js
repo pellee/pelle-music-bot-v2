@@ -27,7 +27,7 @@ module.exports = {
 		await interaction.deferReply();
 
 		if (skipTo != undefined) {
-			skipTo--;
+			skipTo -= 2;
 
 			queue.skipTo(skipTo);
 			message = `Skipping **${queue.current.title}**`;

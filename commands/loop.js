@@ -42,8 +42,27 @@ module.exports = {
 
 		await interaction.deferReply();
 		const queue = player.getQueue(interaction.guildId);
-		const bool = queue.setRepeatMode(interaction.options.get('type').value);
+		const choice = interaction.options.get('type').value;
+		let message;
 
-		return await interaction.followUp({ content: bool ? 'Loop activated!' : 'There was an error trying to execute this command' });
+		switch (choice) {
+		case QueueRepeatMode.OFF:
+			message = 'Loop mode desactivated!';
+			break;
+		case QueueRepeatMode.TRACK:
+			message = 'Loop track 🔂';
+			break;
+		case QueueRepeatMode.QUEUE:
+			message = 'Loop queue 🔁';
+			break;
+		case QueueRepeatMode.AUTOPLAY:
+			message = 'Autoplay activated ▶️';
+			break;
+		default:
+			message = 'The choice does not exist';
+			break;
+		}
+
+		return await interaction.followUp({ content: queue.setRepeatMode(choice) ? message : 'There was an error trying to execute this command' });
 	}
 };

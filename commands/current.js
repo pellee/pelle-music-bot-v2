@@ -17,14 +17,15 @@ module.exports = {
 		await interaction.deferReply();
 
 		const queue = player.getQueue(interaction.guild);
-		const playerTime = queue.getPlayerTimestamp();
-
+		const existPlaylist = queue.current.playlist ? true : false;
 		const embedMessage = new MessageEmbed()
 			.setColor('GREEN')
-			.setTitle('Playing!')
-			.setDescription(`**${queue.current.title}** (${playerTime.progress})`)
+			.setAuthor({ name: queue.current.author })
+			.setThumbnail(queue.current.thumbnail)
+			.setTitle(`🔊 Playing: ${queue.current.title} ${existPlaylist ? '-' + queue.current.playlist.title : ''}`)
+			.setURL(existPlaylist ? queue.current.playlist.url : queue.current.url)
 			.addFields({ name: '\u200B', value: queue.createProgressBar() })
-			.setFooter({ text : `Requested By: ${interaction.user.tag}`, iconURL : `${interaction.user.displayAvatarURL({ format : 'png' })}` });
+			.setFooter({ text : `Requested By: ${queue.current.requestedBy.username}` });
 
 		return await interaction.followUp({ embeds: [embedMessage] });
 	}

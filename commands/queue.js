@@ -6,8 +6,7 @@ function buildFields(track, idx) {
 	return [
 		{ name : 'Id', value : `${idx}`, inline : true },
 		{ name : 'Song', value : `${track.title}`, inline : true },
-		{ name : 'Duration', value : `${track.duration}`, inline : true },
-		{ name : 'User', value : `${track.requestedBy.username}`, inline : true }
+		{ name : 'Duration', value : `${track.duration}`, inline : true }
 	];
 }
 
@@ -49,7 +48,7 @@ module.exports = {
 		}
 
 		const embedMessage = buildMessageQueue(queue.tracks, queue.current)
-			.setFooter({ text : '.' + '\u3000'.repeat(32) + `Queue length: ${queue.tracks.length + 1}` });
+			.setFooter({ text : `Queue length: ${queue.tracks.length + 1}` });
 
 		return await interaction.followUp({ embeds: [embedMessage] });
 	}
