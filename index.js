@@ -25,6 +25,15 @@ player.on('connectionError', function(queue, error) {
 	console.log(error);
 });
 
+player.on('error', (queue, error) => {
+	queue.metadata.channel.send('There was an error with the player!');
+	console.log(error);
+});
+
+player.on('queueEnd', (queue) => {
+	queue.metadata.channel.send('Queue end!');
+});
+
 client.commands = new Collection();
 const commadsFiles = fs.readdirSync('./commands').filter(file => file.endsWith('js'));
 

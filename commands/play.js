@@ -50,6 +50,6 @@ module.exports = {
 			await queue.play();
 		}
 
-		return await interaction.followUp({ content: '⏱️ | Loading track!' });
+		return await interaction.followUp({ content: '⏱️ | Track Added to the queue!' });
 	}
 };

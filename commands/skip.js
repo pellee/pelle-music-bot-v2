@@ -27,6 +27,10 @@ module.exports = {
 		await interaction.deferReply();
 
 		if (skipTo != undefined) {
+
+			if (skipTo <= 1 || skipTo > queue.tracks.length + 1) {
+				return await interaction.followUp({ content: `Has to be a number between 2 and ${queue.tracks.length + 1}` });
+			}
 			skipTo -= 2;
 
 			queue.skipTo(skipTo);
